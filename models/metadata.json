@@ -1,0 +1,96 @@
+{
+  "best_algorithm": "MultinomialNB",
+  "classes": [
+    "ham",
+    "spam"
+  ],
+  "topics": [
+    "crypto_scam",
+    "lottery",
+    "marketing",
+    "newsletter",
+    "notification",
+    "personal",
+    "phishing",
+    "work"
+  ],
+  "dataset_size": 2600,
+  "train_size": 2080,
+  "test_size": 520,
+  "test_metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "roc_auc": 0.9999999999999999
+  },
+  "confusion_matrix": {
+    "tn": 280,
+    "fp": 0,
+    "fn": 0,
+    "tp": 240
+  },
+  "topic_test_accuracy": 1.0,
+  "benchmark_results": {
+    "MultinomialNB": {
+      "accuracy_mean": 1.0,
+      "accuracy_std": 0.0,
+      "precision_mean": 1.0,
+      "precision_std": 0.0,
+      "recall_mean": 1.0,
+      "recall_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "roc_auc_mean": 1.0,
+      "roc_auc_std": 0.0
+    },
+    "ComplementNB": {
+      "accuracy_mean": 1.0,
+      "accuracy_std": 0.0,
+      "precision_mean": 1.0,
+      "precision_std": 0.0,
+      "recall_mean": 1.0,
+      "recall_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "roc_auc_mean": 1.0,
+      "roc_auc_std": 0.0
+    },
+    "LogisticRegression": {
+      "accuracy_mean": 1.0,
+      "accuracy_std": 0.0,
+      "precision_mean": 1.0,
+      "precision_std": 0.0,
+      "recall_mean": 1.0,
+      "recall_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "roc_auc_mean": 1.0,
+      "roc_auc_std": 0.0
+    },
+    "LinearSVC": {
+      "accuracy_mean": 1.0,
+      "accuracy_std": 0.0,
+      "precision_mean": 1.0,
+      "precision_std": 0.0,
+      "recall_mean": 1.0,
+      "recall_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "roc_auc_mean": 1.0,
+      "roc_auc_std": 4.965068306494546e-17
+    },
+    "RandomForest": {
+      "accuracy_mean": 1.0,
+      "accuracy_std": 0.0,
+      "precision_mean": 1.0,
+      "precision_std": 0.0,
+      "recall_mean": 1.0,
+      "recall_std": 0.0,
+      "f1_mean": 1.0,
+      "f1_std": 0.0,
+      "roc_auc_mean": 1.0,
+      "roc_auc_std": 0.0
+    }
+  }
+}

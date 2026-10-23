@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Topic Spam Email Classifier | AI & NLP Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="logo-area">
+          <div class="logo-icon">🛡️</div>
+          <div>
+            <h1>Email Spam & Topic Classifier</h1>
+            <p class="subtitle">Natural Language Processing (NLP) • Machine Learning Classification • Feature Explainability</p>
+          </div>
+        </div>
+        <div class="header-badges">
+          <span class="badge badge-pill badge-primary">NLP + TF-IDF</span>
+          <span class="badge badge-pill badge-secondary">Supervised Learning</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Grid -->
+    <main class="main-layout">
+      <!-- Left Column: Input & Presets -->
+      <section class="card input-card">
+        <div class="card-header">
+          <h2>Analyze Email</h2>
+          <span class="hint">Paste text or choose a test preset below</span>
+        </div>
+
+        <!-- Preset Pills -->
+        <div class="preset-wrapper">
+          <span class="preset-label">Test Samples:</span>
+          <div class="preset-buttons">
+            <button class="preset-btn" data-preset="phishing">🚨 Phishing Alert</button>
+            <button class="preset-btn" data-preset="lottery">💰 $2.5M Lottery</button>
+            <button class="preset-btn" data-preset="crypto">📈 Crypto Trading Bot</button>
+            <button class="preset-btn" data-preset="work">💼 Sprint Planning</button>
+            <button class="preset-btn" data-preset="receipt">✈️ Flight Booking</button>
+          </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="textarea-container">
+          <textarea id="email-input" placeholder="Paste full email subject and body here... (e.g. URGENT: Your account has been suspended! Click link to verify...)"></textarea>
+          <div class="textarea-footer">
+            <span id="char-count">0 characters | 0 words</span>
+            <button id="clear-btn" class="btn btn-ghost">Clear</button>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <div class="action-bar">
+          <button id="classify-btn" class="btn btn-primary btn-large">
+            <span class="btn-icon">⚡</span>
+            <span>Classify Email</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Right Column: Results & Explainability -->
+      <section class="card result-card" id="result-container">
+        <div class="card-header">
+          <h2>Classification Verdict</h2>
+          <span id="analysis-status" class="hint">Awaiting input...</span>
+        </div>
+
+        <div id="empty-state" class="empty-state">
+          <div class="empty-icon">📨</div>
+          <h3>Ready for Evaluation</h3>
+          <p>Input an email or click any preset sample on the left to inspect its spam classification, predicted topic, structural cues, and influential tokens.</p>
+        </div>
+
+        <div id="results-panel" class="results-panel hidden">
+          <!-- Primary Verdict Banner -->
+          <div id="verdict-banner" class="verdict-banner">
+            <div class="verdict-main">
+              <span id="verdict-icon" class="verdict-icon">⚠️</span>
+              <div>
+                <span class="verdict-tag" id="verdict-tag">SPAM DETECTED</span>
+                <h3 id="verdict-title">Potential Malicious Message</h3>
+              </div>
+            </div>
+            <div class="verdict-score">
+              <span class="score-label">Confidence</span>
+              <span class="score-val" id="confidence-val">99.8%</span>
+            </div>
+          </div>
+
+          <!-- Probability Gauge -->
+          <div class="gauge-section">
+            <div class="gauge-labels">
+              <span>Ham (Legitimate): <strong id="ham-pct">0.2%</strong></span>
+              <span>Spam: <strong id="spam-pct">99.8%</strong></span>
+            </div>
+            <div class="gauge-track">
+              <div id="ham-bar" class="gauge-fill-ham" style="width: 2%"></div>
+              <div id="spam-bar" class="gauge-fill-spam" style="width: 98%"></div>
+            </div>
+          </div>
+
+          <!-- Topic Badge & Heuristics -->
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-title">Identified Topic</span>
+              <div class="topic-pill" id="topic-pill">
+                <span id="topic-icon">🎯</span>
+                <span id="topic-text">Phishing & Credential Alert</span>
+              </div>
+            </div>
+            <div class="meta-item">
+              <span class="meta-title">Topic Confidence</span>
+              <span class="meta-val" id="topic-conf">92.4%</span>
+            </div>
+          </div>
+
+          <!-- Structural Heuristics -->
+          <div class="heuristics-card">
+            <h4>Structural Domain Signals</h4>
+            <div class="heuristics-grid">
+              <div class="h-stat">
+                <span class="h-name">Capital Ratio</span>
+                <span class="h-val" id="h-cap">0%</span>
+              </div>
+              <div class="h-stat">
+                <span class="h-name">Currency Signs</span>
+                <span class="h-val" id="h-currency">0</span>
+              </div>
+              <div class="h-stat">
+                <span class="h-name">Links / URLs</span>
+                <span class="h-val" id="h-urls">0</span>
+              </div>
+              <div class="h-stat">
+                <span class="h-name">Exclamation Punct.</span>
+                <span class="h-val" id="h-exclamation">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Explainability / Word Contributions -->
+          <div class="explainability-section">
+            <h4>NLP Explainability: Influential Tokens</h4>
+            <p class="section-desc">Tokens with the highest contribution to the model's decision:</p>
+            
+            <div class="words-container">
+              <div class="words-col">
+                <span class="col-title spam-title">Spam Signals (+)</span>
+                <div id="spam-words-list" class="words-pills">
+                  <span class="no-words">None</span>
+                </div>
+              </div>
+
+              <div class="words-col">
+                <span class="col-title ham-title">Ham Signals (-)</span>
+                <div id="ham-words-list" class="words-pills">
+                  <span class="no-words">None</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Bottom Section: AI Architecture & Benchmarks -->
+    <section class="card benchmark-card">
+      <div class="benchmark-header">
+        <div>
+          <h2>AI & ML Architecture Performance</h2>
+          <p class="subtitle">5-Fold Stratified Cross-Validation Benchmark on 2,600 Verified Email Samples</p>
+        </div>
+        <button id="refresh-metrics-btn" class="btn btn-secondary">Refresh Benchmark</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="benchmark-table">
+          <thead>
+            <tr>
+              <th>Algorithm</th>
+              <th>Accuracy</th>
+              <th>Precision</th>
+              <th>Recall</th>
+              <th>F1-Score</th>
+              <th>ROC-AUC</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="benchmark-tbody">
+            <tr><td colspan="7" class="loading-td">Loading model metrics...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pipeline Explainer -->
+      <div class="pipeline-explainer">
+        <h3>NLP Preprocessing & Machine Learning Pipeline</h3>
+        <div class="pipeline-steps">
+          <div class="p-step">
+            <span class="p-num">1</span>
+            <strong>Text Cleaning</strong>
+            <span>HTML stripping, URL/Email/Currency normalization</span>
+          </div>
+          <div class="p-arrow">➔</div>
+          <div class="p-step">
+            <span class="p-num">2</span>
+            <strong>Stopwords & Stemming</strong>
+            <span>Selective stopword removal + Porter Stemmer</span>
+          </div>
+          <div class="p-arrow">➔</div>
+          <div class="p-step">
+            <span class="p-num">3</span>
+            <strong>Feature Vectorization</strong>
+            <span>Sublinear TF-IDF (1-2 N-Grams) + Heuristics</span>
+          </div>
+          <div class="p-arrow">➔</div>
+          <div class="p-step">
+            <span class="p-num">4</span>
+            <strong>Supervised Classifier</strong>
+            <span>Multi-model evaluation (Naive Bayes, LR, SVM)</span>
+          </div>
+          <div class="p-arrow">➔</div>
+          <div class="p-step">
+            <span class="p-num">5</span>
+            <strong>Decision & Explanation</strong>
+            <span>Calibrated probabilities & word-level impact</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Topic Spam Email Classifier • AI Concepts: NLP, Vectorization, Supervised Classification & Explainable AI</p>
+    </footer>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
+
